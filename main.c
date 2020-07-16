@@ -1,4 +1,5 @@
-#include "./main.h"
+#include "/home/ubuntu/Programming/CString/include/main.h"
+
 
 int main(int argc,char* argv[])
 {
