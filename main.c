@@ -8,7 +8,8 @@ int main(int argc,char* argv[])
 
     memset(InputStr1,0,sizeof(InputStr1));
     memset(InputStr2,0,sizeof(InputStr2));
-
+    
+    printf("hello world\n");
     scanf("%s %s",InputStr1,InputStr2);
 
     stateCmp = Cstrcmp(InputStr1,InputStr2);
