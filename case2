@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#value
+num1=0
+factorial=0
+declare -a perm
+
+
+#recursive
+fact()
+{
+	local temp=$1
+	if [ $temp -le 1 ]; then
+		echo 1
+	else
+		factorial=`expr $temp \- 1`  # '과 `이 헷갈려서 헤맴
+		factorial=$(fact $factorial)
+		factorial=$(($temp \* $factorial))
+
+	fi
+}
+
+#main
+fact $1
+echo "$1의 팩토리얼은 $factorial입니다."
+
+exit 0
