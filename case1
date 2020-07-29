@@ -7,15 +7,15 @@ NO_PRIME=0
 num1=0
 num2=0
 
-PrimeList={}
+declare -a PrimeList
 
 #init
 function init()
 {
-	local size=${num2}+1
+	local size=${num2}
 
 	for ((i=0;i<=$size;$((i=i+1))))do
-		PrimeList[${i}]=$PRIME
+		PrimeList[i]=$PRIME
 	done	
 		PrimeList[0]=$NO_PRIME
 		PrimeList[1]=$NO_PRIME
@@ -52,9 +52,6 @@ function checkPrime()
 		
 			index=$((i*j))
 			
-			if [PrimeList[${index}] -eq 0];then
-				continue
-			fi
 			echo "index = ${index}"
 		
 			PrimeList[${index}]=$NO_PRIME
@@ -64,6 +61,7 @@ function checkPrime()
 
 	return
 }
+
 #input
 function input()
 {
@@ -72,18 +70,20 @@ function input()
 
 	echo "num1 num2"
 
-	Prime_List=('seq 1 ${num2}')
-	echo ${Prime_List[@]} 
+#	echo ${Prime_List[@]} 
 	return
 }
 
 #print
-for ((i=2;i<=num2;i++));do
-	if [PrimeList[${i}] -eq 1]; then
-		echo "i = ${i}"
-	fi
-done
-
+function OutPut()
+{
+	echo "${num1}과 ${num2} 사이의 소수 출력\n"
+	for ((i=2;i<=num2;i++));do
+		if [ ${PrimeList[i]} -eq 1 ]; then
+			echo "${i}"	
+		fi
+	done
+}
 #main
 
 input
@@ -91,3 +91,5 @@ echo "${num1} ${num2}"
 init
 echo ${PrimeList[@]}
 checkPrime
+echo ${PrimeList[@]}
+OutPut
