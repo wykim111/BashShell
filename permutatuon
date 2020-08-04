@@ -1,5 +1,4 @@
-$ cat pjt2.sh
-#i/bin/bash
+#!/bin/bash
 
 #define
 
@@ -13,7 +12,10 @@ declare -a Perm
 declare -a array
 declare -a check
 
+MinRet=987654321
+
 ArraySize=0
+CalNum=0
 
 function swap()
 {
@@ -78,7 +80,6 @@ function power()
 function calculate()
 {
         local exp
-        local num
         local digit
 
         echo "calculate start"
@@ -90,12 +91,12 @@ function calculate()
                 let digit=$(power ${exp})
                 echo "digit=$digit"
 
-                let num=$num+$((${array[$i]}*${digit}))
+                let CalNum=$CalNum+$((${Perm[$i]}*${digit}))
 
         done
 
+
         echo "caculate end"
-        echo "Result ${num}"
 
 }
 
@@ -104,11 +105,28 @@ function permutation()
         local depth=$1
 
         if [ $depth -eq $ArraySize ]; then
-                for ((i=0;i<$ArraySize;i++));do
-                        echo "${perm[$i]}"
+                for ((i=0;i<$ArraySize;i++)); do
+                        printf "${Perm[$i]}"
 
                 done
-                echo "end"
+                        echo ""
+
+                CalNum=0
+
+                calculate
+
+                temp=${CalNum}
+
+                echo "temp=$temp"
+
+                if [ ${standard} -lt ${temp} ]; then
+                        if [ ${minRet} -gt ${temp} ]; then
+                                minRet=${temp}
+                                echo "perm -> minRet=${temp}"
+                        fi
+
+                fi
+
 
         else
 
@@ -118,11 +136,12 @@ function permutation()
                                 continue
                         fi
 
+                        echo "i=$i"
                         check[$i]=${TRUE}
-                        perm[$depth]=${array[$i]}
+                        Perm[$depth]=${array[$i]}
                         depth=$(($depth+1))
 
-                        permutation $depth
+                        (permutation $depth)
 
                         depth=$(($depth-1))
                         check[$i]=${FALSE}
@@ -134,4 +153,5 @@ function permutation()
 read standard
 init
 echo "array[@] = ${array[@]}"
-calculate
+permutation 0
+echo "minRet=$MinRet"
